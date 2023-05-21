@@ -1,0 +1,29 @@
+.alert {
+    position: relative;
+    padding: 7px;
+    margin: 7px 0;
+    text-align: center;
+    font-weight: bolder;
+    border: 1px solid transparent;
+    color: #ea0707;
+    background-color: #9dc2e8;
+    border-color: #b8daff;
+    border-radius: 5px;
+}
+
+.name {
+    width: 200px;
+    height: 35px;
+    border-radius: 5px;
+    font-size: 15px;
+    font-weight: bold;
+    text-indent: 10px;
+}
+
+body {
+    width: auto;
+    height: auto;
+    background-image: url("1683187631154.jpg");
+    background-repeat: no-repeat;
+    background-size: 100%;
+}

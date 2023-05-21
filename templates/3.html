@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;"/>
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static',filename='style3.css') }}">
+    <title>云端疼痛识别与病历匹配</title>
+</head>
+
+<body>
+{% for message in get_flashed_messages() %}
+    <div class="alert">{{ message }}</div>
+{% endfor %}
+<br>
+<h1 align="center">
+    <font color="white" face="黑体" size="7">云端疼痛识别与病历匹配 </font>
+</h1>
+<div class=" mydiv">
+    <a href="login">
+        <button
+                style="width:230px;height: 80px;background-color: #7E649E;color:rgb(250, 250, 250);font-size: 30px;">首页
+        </button>
+    </a>
+    <form action="/patientSearchPage" method="get">
+        <button
+                style="width:230px;height: 80px;background-color: #7E649E;color:rgb(250, 250, 250);font-size: 30px;">
+            患者查询
+        </button>
+    </form>
+    <a href="">
+        <button
+                style="width:230px;height: 80px;background-color: #7E649E;color:rgb(250, 250, 250);font-size: 30px;">
+            相似病例
+        </button>
+    </a>
+</div>
+<br><br>
+<form name="sameCasePageDetial" method="get" action="">
+    <div class="div3">
+        <img name="curimg" src="{{ url_for('static',filename='read_from_mysql.png') }}" alt=""
+             onerror="this.src='{{ url_for('static',filename='0ae3343ba25143f3780885cc064dadf.png') }}';this.onerror=null"
+             width="480px" height="320px" hapcace="5"/>
+    </div>
+    <div class="div1">
+        <font size="5" color="white">患者姓名：</font>
+        <input name="curname" type="text" value="{{ res.name }}"
+               style="background-color:transparent;border:0;width: 200px; height: 30px; font-size: 20px">
+    </div>
+    <br><br><br>
+    <div class="div1">
+        <font size="5" color="white">医嘱开始时间：</font>
+        <input type="text" value="{{ res.medicaladvice_time }}"
+               style="background-color:transparent;border:0;width: 200px; height: 30px; font-size: 20px">
+    </div>
+    <br><br> <br>
+    <div class="div1">
+        <font size="5" color="white">医嘱类型：·临时医嘱 ·长期医嘱 </font>
+        <input type="text" value="{{ res.medicaladvice_type }}"
+               style="background-color:transparent;border:0;width: 200px; height: 30px; font-size: 20px">
+    </div>
+    <br><br> <br>
+    <div class="div1">
+        <font size="5" color="white">医嘱：</font>
+        <input type="text" value="{{ res.medicaladvice }}"
+               style="background-color:transparent;border:0;width: 200px; height: 30px; font-size: 20px">
+    </div>
+    <br><br> <br>
+    <div class="div1">
+        <font size="5" color="white">剂量：</font>
+        <input type="text" value="{{ res.drug_dosage }}"
+               style="background-color:transparent;border:0;width: 50px; height: 30px; font-size: 20px">
+        <font color="black" face="黑体" size="4"><b>ml</b></font>
+    </div>
+    <br><br><br>
+    <div class="div1">
+        <font size="5" color="white">用法：</font>
+        <input type="text" value="{{ res.drug_usage }}"
+               style="background-color:transparent;border:0;width: 200px; height: 30px; font-size: 20px">
+    </div>
+    <br>
+    <div class="div2">
+        <button onclick="sameCasePageDetial.action='/sameCasePageDetial/confirm';sameCasePageDetial.submit();"
+                type="submit"
+                style="height: 50px;width: 100px;border-radius:15px;background-color: #7E649E;color:rgb(250, 250, 250);font-size: 20px;">
+            确认
+        </button>
+    </div>
+
+
+    <div class="div4">
+        <button onclick="sameCasePageDetial.action='/sameCasePageDetial/cancel';sameCasePageDetial.submit();"
+                type="submit"
+                style="height: 50px;width: 100px;border-radius:15px;background-color: #7E649E;color:rgb(250, 250, 250);font-size: 20px;">
+            取消
+        </button>
+    </div>
+    <br>
+    <br>
+    <h3 style="position:absolute;left:500px;top:650px">
+        <font color="white" face="黑体" size="5">病例一</font>
+    </h3>
+    <h3 style="position:absolute;left:850px;top:650px">
+        <font color="white" face="黑体" size="5">病例二</font>
+    </h3>
+    <h3 style="position:absolute;left:1150px;top:650px">
+        <font color="white" face="黑体" size="5">病例三</font>
+    </h3>
+    <br>
+    <br>
+    <br>
+    <div>
+        <fieldset class="form1">
+            <font color="black" face="黑体" size="4"><b>姓名:</b></font>
+            <input type="text"
+                    {% if case %}
+                   value="{{ case[0].name }}"
+                    {% endif %}
+                   style="background-color:transparent;border:0;width: 200px; height: 30px; font-size: 20px">
+            <br><br>
+            <font color="black" face="黑体" size="4"><b>疼痛等级：</b></font>
+            <input type="text"
+                    {% if case %}
+                   value="{{ case[0].painlevel }}"
+                    {% endif %}
+                   style="background-color:transparent;border:0;width: 100px; height: 30px; font-size: 20px">
+            <br>
+            <font color="black" face="黑体" size="4"><b>开具处方：</b></font>
+            <input type="text"
+                    {% if case %}
+                   value="{{ case[0].medicaladvice }}"
+                    {% endif %}
+                   style="background-color:transparent;border:0;width: 200px; height: 30px; font-size: 20px">
+            <br>
+            <font color="black" face="黑体" size="4"><b>医嘱类型：</b></font>
+            <input type="text"
+                    {% if case %}
+                   value="{{ case[0].medicaladvice_type }}"
+                    {% endif %}
+                   style="background-color:transparent;border:0;width: 200px; height: 30px; font-size: 20px">
+            <br>
+            <font color="black" face="黑体" size="4"><b>音乐疗法：</b></font>
+            <input type="text"
+                    {% if case %}
+                   value="{{ case[0].music_type }}"
+                    {% endif %}
+                   style="background-color:transparent;border:0;width: 100px; height: 30px; font-size: 20px">
+            <br>
+            <font color="black" face="黑体" size="4"><b>按摩仪建议治疗时长:</b></font>
+            <input type="text"
+                    {% if case %}
+                   value="{{ case[0].mechine_time }}"
+                    {% endif %}
+                   style="background-color:transparent;border:0;width: 30px; height: 30px; font-size: 20px">
+            <font color="black" face="黑体" size="4"><b>分钟</b></font>
+            <br>
+            <font color="black" face="黑体" size="4"><b>止痛剂选择:</b></font>
+            <input type="text"
+                    {% if case %}
+                   value="{{ case[0].drug }}"
+                    {% endif %}
+                   style="background-color:transparent;border:0;width: 100px; height: 30px; font-size: 20px">
+            <br>
+            <font color="black" face="黑体" size="4"><b>推荐剂量:</b></font>
+            <input type="text"
+                    {% if case %}
+                   value="{{ case[0].drug_dosage }}"
+                    {% endif %}
+                   style="background-color:transparent;border:0;width: 50px; height: 30px; font-size: 20px">
+            <font color="black" face="黑体" size="4"><b>ml</b></font>
+            <br>
+        </fieldset>
+    </div>
+
+
+    <div>
+        <fieldset class="form2">
+            <font color="black" face="黑体" size="4"><b>姓名:</b></font>
+            <input type="text"
+                    {% if case %}
+                   value="{{ case[1].name }}"
+                    {% endif %}
+                   style="background-color:transparent;border:0;width: 200px; height: 30px; font-size: 20px">
+            <br><br>
+            <font color="black" face="黑体" size="4"><b>疼痛等级：</b></font>
+            <input type="text"
+                    {% if case %}
+                   value="{{ case[1].painlevel }}"
+                    {% endif %}
+                   style="background-color:transparent;border:0;width: 100px; height: 30px; font-size: 20px">
+            <br>
+            <font color="black" face="黑体" size="4"><b>开具处方：</b></font>
+            <input type="text"
+                    {% if case %}
+                   value="{{ case[1].medicaladvice }}"
+                    {% endif %}
+                   style="background-color:transparent;border:0;width: 200px; height: 30px; font-size: 20px">
+            <br>
+            <font color="black" face="黑体" size="4"><b>医嘱类型：</b></font>
+            <input type="text"
+                    {% if case %}
+                   value="{{ case[1].medicaladvice_type }}"
+                    {% endif %}
+                   style="background-color:transparent;border:0;width: 200px; height: 30px; font-size: 20px">
+            <br>
+            <font color="black" face="黑体" size="4"><b>音乐疗法：</b></font>
+            <input type="text"
+                    {% if case %}
+                   value="{{ case[1].music_type }}"
+                    {% endif %}
+                   style="background-color:transparent;border:0;width: 100px; height: 30px; font-size: 20px">
+            <br>
+            <font color="black" face="黑体" size="4"><b>按摩仪建议治疗时长:</b></font>
+            <input type="text"
+                    {% if case %}
+                   value="{{ case[1].mechine_time }}"
+                    {% endif %}
+                   style="background-color:transparent;border:0;width: 30px; height: 30px; font-size: 20px">
+            <font color="black" face="黑体" size="4"><b>分钟</b></font>
+            <br>
+            <font color="black" face="黑体" size="4"><b>止痛剂选择:</b></font>
+            <input type="text"
+                    {% if case %}
+                   value="{{ case[1].drug }}"
+                    {% endif %}
+                   style="background-color:transparent;border:0;width: 100px; height: 30px; font-size: 20px">
+            <br>
+            <font color="black" face="黑体" size="4"><b>推荐剂量:</b></font>
+            <input type="text"
+                    {% if case %}
+                   value="{{ case[1].drug_dosage }}"
+                    {% endif %}
+                   style="background-color:transparent;border:0;width: 50px; height: 30px; font-size: 20px">
+            <font color="black" face="黑体" size="4"><b>ml</b></font>
+            <br>
+        </fieldset>
+    </div>
+
+    <div>
+        <fieldset class="form3">
+            <font color="black" face="黑体" size="4"><b>姓名:</b></font>
+            <input type="text"
+                    {% if case %}
+                   value="{{ case[2].name }}"
+                    {% endif %}
+                   style="background-color:transparent;border:0;width: 200px; height: 30px; font-size: 20px">
+            <br><br>
+            <font color="black" face="黑体" size="4"><b>疼痛等级：</b></font>
+            <input type="text"
+                    {% if case %}
+                   value="{{ case[2].painlevel }}"
+                    {% endif %}
+                   style="background-color:transparent;border:0;width: 100px; height: 30px; font-size: 20px">
+            <br>
+            <font color="black" face="黑体" size="4"><b>开具处方：</b></font>
+            <input type="text"
+                    {% if case %}
+                   value="{{ case[2].medicaladvice }}"
+                    {% endif %}
+                   style="background-color:transparent;border:0;width: 200px; height: 30px; font-size: 20px">
+            <br>
+            <font color="black" face="黑体" size="4"><b>医嘱类型：</b></font>
+            <input type="text"
+                    {% if case %}
+                   value="{{ case[2].medicaladvice_type }}"
+                    {% endif %}
+                   style="background-color:transparent;border:0;width: 200px; height: 30px; font-size: 20px">
+            <br>
+            <font color="black" face="黑体" size="4"><b>音乐疗法：</b></font>
+            <input type="text"
+                    {% if case %}
+                   value="{{ case[2].music_type }}"
+                    {% endif %}
+                   style="background-color:transparent;border:0;width: 100px; height: 30px; font-size: 20px">
+            <br>
+            <font color="black" face="黑体" size="4"><b>按摩仪建议治疗时长:</b></font>
+            <input type="text"
+                    {% if case %}
+                   value="{{ case[2].mechine_time }}"
+                    {% endif %}
+                   style="background-color:transparent;border:0;width: 30px; height: 30px; font-size: 20px">
+            <font color="black" face="黑体" size="4"><b>分钟</b></font>
+            <br>
+            <font color="black" face="黑体" size="4"><b>止痛剂选择:</b></font>
+            <input type="text"
+                    {% if case %}
+                   value="{{ case[2].drug }}"
+                    {% endif %}
+                   style="background-color:transparent;border:0;width: 100px; height: 30px; font-size: 20px">
+            <br>
+            <font color="black" face="黑体" size="4"><b>推荐剂量:</b></font>
+            <input type="text"
+                    {% if case %}
+                   value="{{ case[2].drug_dosage }}"
+                    {% endif %}
+                   style="background-color:transparent;border:0;width: 50px; height: 30px; font-size: 20px">
+            <font color="black" face="黑体" size="4"><b>ml</b></font>
+            <br>
+        </fieldset>
+    </div>
+</form>
+</body>
+
+</html>
+
+<script>
+    $(".alert").fadeOut(5000);
+</script>

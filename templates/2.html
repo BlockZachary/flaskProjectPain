@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static',filename='style2.css') }}">
+    <title>云端疼痛识别与病历匹配</title>
+</head>
+
+<body>
+{% for message in get_flashed_messages() %}
+    <div class="alert">{{ message }}</div>
+{% endfor %}
+<br>
+<h1 align="center">
+    <font color="white" face="黑体" size="7">云端疼痛识别与病历匹配 </font>
+</h1>
+<div class=" mydiv">
+    <a href="login">
+        <button
+                style="width:230px;height: 80px;background-color: #7E649E;color:rgb(250, 250, 250);font-size: 30px;">首页
+        </button>
+    </a>
+    <a href="">
+        <button
+                style="width:230px;height: 80px;background-color: #7E649E;color:rgb(250, 250, 250);font-size: 30px;">
+            患者查询
+        </button>
+    </a>
+    <form action="/sameCasePage" method="get">
+        <button
+                style="width:230px;height: 80px;background-color: #7E649E;color:rgb(250, 250, 250);font-size: 30px;">
+            相似病例
+        </button>
+    </form>
+</div>
+<br>
+<br>
+<form autocapitalize="off" action="/patientSearchDetial" method="get">
+    <div class="div3">
+        <img name="curimg" src="{{ url_for('static',filename='read_from_mysql.png') }}" alt=""
+             onerror="this.src='{{ url_for('static',filename='0ae3343ba25143f3780885cc064dadf.png') }}';this.onerror=null"
+             width="480px" height="320px" alt="患者头像" hapcace="5"
+             style="float: right;"/>
+
+    </div>
+    <div class="div1">
+        <font size="5" color="white">患者姓名：</font>
+        <input name="curname" type="text" value="{{ res.name }}"
+               style="background-color:transparent;border:0;width: 200px; height: 30px; font-size: 20px">
+    </div>
+    <div class="div2">
+        <font size="5" color="white">过敏史：</font>
+        <input type="text" value="{{ res.allergies }}"
+               style="background-color:transparent;border:0;width: 200px; height: 30px; font-size: 20px">
+    </div>
+    <br>
+    <div class="div1">
+        <font size="5" color="white">患者身份证号：</font>
+        <input type="text" value="{{ res.id_number }}"
+               style="background-color:transparent;border:0;width: 250px; height: 30px; font-size: 20px">
+    </div>
+    <div class="div2">
+        <font size="5" color="white">过往病例：</font>
+        <input type="text" value="{{ res.past_cases }}"
+               style="background-color:transparent;border:0;width: 200px; height: 30px; font-size: 20px">
+    </div>
+    <br>
+    <div class="div1">
+        <font size="5" color="white">性别：</font>
+        <input type="text" value="{{ res.gender }}"
+               style="background-color:transparent;border:0;width: 200px; height: 30px; font-size: 20px">
+    </div>
+    <div class="div2">
+        <font size="5" color="white">肝功能：</font>
+        <input type="text" value="{{ res.liver_function }}"
+               style="background-color:transparent;border:0;width: 200px; height: 30px; font-size: 20px">
+    </div>
+    <br>
+    <div class="div1">
+        <font size="5" color="white">出生日期：</font>
+        <input type="text" value="{{ res.birthdate }}"
+               style="background-color:transparent;border:0;width: 200px; height: 30px; font-size: 20px">
+    </div>
+    <div class="div2">
+        <font size="5" color="white">肾功能：</font>
+        <input type="text" value="{{ res.renal_function }}"
+               style="background-color:transparent;border:0;width: 200px; height: 30px; font-size: 20px">
+    </div>
+    <br>
+    <div class="div1">
+        <font size="5" color="white">体重：</font>
+        <input type="text" value="{{ res.body_weight }}"
+               style="background-color:transparent;border:0;width: 200px; height: 30px; font-size: 20px">
+    </div>
+    <div class="div2">
+        <font size="5" color="white">孕育情况：</font>
+        <input type="text" value="{{ res.conception }}"
+               style="background-color:transparent;border:0;width: 200px; height: 30px; font-size: 20px">
+    </div>
+    <br>
+    <br>
+    <br>
+    <button
+            style="height: 50px;width: 100px;border-radius:15px;background-color: #7E649E;color:rgb(250, 250, 250);font-size: 20px;">
+        确认
+    </button>
+</form>
+
+
+</body>
+
+</html>
+
+<script>
+    $(".alert").fadeOut(5000);
+</script>

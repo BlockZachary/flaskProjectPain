@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static',filename='style.css') }}">
+
+    <title>云端疼痛识别</title>
+</head>
+<body>
+{% for message in get_flashed_messages() %}
+    <div class="alert">{{ message }}</div>
+{% endfor %}
+<br>
+<br>
+<br>
+<br>
+<h1 align="center">
+    <font color="white" face="黑体" size="7">Hello!你好！</font>
+</h1>
+<br>
+<br>
+<form autocapitalize="off" action="" name="login_regist" method="get">
+    <div style="text-align: center;vertical-align: middle;"><input type="text" class="name" name="username"
+                                                                   style="background: rgba(181, 163, 163, 0.908);text-align:center "
+                                                                   placeholder="手机/邮箱/用户名">
+    </div>
+    <br>
+
+    <div style="text-align: center;vertical-align: middle;"><input type="password" class="name" name="password"
+                                                                   style="background: rgba(181, 163, 163, 0.908);text-align:center "
+                                                                   placeholder="密码">
+    </div>
+    <br>
+
+    <div style="text-align: center;vertical-align: middle;">
+        <button onclick="send(1)" class="name" name="loginer"
+                style="background: rgba(149, 9, 200, 0.908);text-align:center">立即登录
+        </button>
+    </div>
+
+
+    <br>
+
+    <div style="text-align: center;vertical-align: middle;">
+
+        <button onclick="send(2)" class="name" name="register"
+                style="background: rgba(181, 163, 163, 0.908);text-align:center ">没有账户？马上注册
+        </button>
+    </div>
+</form>
+<br>
+
+</body>
+</html>
+
+<script>
+    $(".alert").fadeOut(5000);
+
+    function send(type) {
+        var url = '';
+        if (type === 1) {
+            url = '/loginer';
+        } else {
+            url = '/register';
+        }
+        document.login_regist.action = url;
+        document.login_regist.submit();
+    }
+</script>
+
+
+
+
